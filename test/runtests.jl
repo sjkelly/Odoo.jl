@@ -2,4 +2,6 @@ using Odoo
 using Base.Test
 
 # write your own tests here
-@test 1 == 1
+demo = Odoo.demo_server()
+@show demo
+@show Odoo.version(demo)
