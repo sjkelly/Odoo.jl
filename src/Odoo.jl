@@ -4,7 +4,7 @@ module Odoo
 
 using XMLRPC
 
-export OdooServer
+export OdooServer, AuthenticatedOdooSession
 
 immutable OdooServer
     url::AbstractString
@@ -25,6 +25,9 @@ object(o::OdooServer) = XMLRPCProxy(o.url*object_endpt)
 common(o::AuthenticatedOdooSession) = XMLRPCProxy(o.server.url*common_endpt)
 object(o::AuthenticatedOdooSession) = XMLRPCProxy(o.server.url*object_endpt)
 
+"""
+Create a `AuthenticatedOdooSession` using the Odoo demo service.
+"""
 function demo_server()
     info = XMLRPCProxy("https://demo.odoo.com/start")["start"]()
     AuthenticatedOdooSession(info["host"], info["database"], info["user"], info["password"])
