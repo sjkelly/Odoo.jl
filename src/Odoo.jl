@@ -57,4 +57,15 @@ function execute_kw(a::AuthenticatedOdooSession, args...)
     object(a)["execute_kw"](a.db, a.uid, a.pw, args...)
 end
 
+
+"""
+List Odoo record fields, optionally constrain the
+listed attributes.
+"""
+function Base.fieldnames(a::AuthenticatedOdooSession, d::AbstractString,
+                         args::AbstractString...)
+    execute_kw(a, d, "fields_get", [], isempty(args) ? Dict() :
+                                       Dict("attributes" => [args...]))
+end
+
 end # module
