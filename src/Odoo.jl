@@ -68,4 +68,31 @@ function Base.fieldnames(a::AuthenticatedOdooSession, d::AbstractString,
                                        Dict("attributes" => [args...]))
 end
 
+"""
+Search Odoo record fields.
+
+Example:
+
+```
+search(odoo, "product.template", ["name", "=", "FooBarProduct"])
+```
+"""
+function Base.search(a::AuthenticatedOdooSession, d::AbstractString,
+                         args...)
+    execute_kw(a, d, "search", Any[Any[args...]])
+end
+
+"""
+Read Odoo record fields.
+
+"""
+function Base.read(a::AuthenticatedOdooSession, d::AbstractString,
+                         args::Array)
+    execute_kw(a, d, "read", Any[args])
+end
+
+Base.read(a::AuthenticatedOdooSession, d::AbstractString, args::Integer...) =
+    read(a,d, [args...])
+
+
 end # module
